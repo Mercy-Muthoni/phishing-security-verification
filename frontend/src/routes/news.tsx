@@ -61,61 +61,14 @@ function NewsPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.4fr),minmax(0,1fr)]">
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Circulating Links</h2>
-            <span className="text-sm text-gray-500">
-              Updated from community reports
-            </span>
-          </div>
-
-          {status === 'loading' ? (
-            <div className="rounded-lg border border-gray-200 bg-white p-6 text-sm text-gray-600">
-              Loading phishing feeds...
-            </div>
-          ) : null}
-
-          {status === 'error' ? (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-sm text-red-700">
-              {message}
-            </div>
-          ) : null}
-
-          {status === 'ready' && feeds.length === 0 ? (
-            <div className="rounded-lg border border-gray-200 bg-white p-6 text-sm text-gray-600">
-              No phishing links reported yet.
-            </div>
-          ) : null}
-
-          <div className="grid gap-4">
-            {feeds.map((item) => (
-              <article key={item.url} className="rounded-lg bg-white p-6 shadow">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="text-sm font-semibold text-gray-900">{item.domain}</div>
-                  <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-                    {item.source === 'user-report' ? 'Community report' : 'Seeded'}
-                  </span>
-                </div>
-                <p className="mt-3 break-all text-sm text-gray-600">{item.url}</p>
-                {item.notes ? (
-                  <p className="mt-3 text-sm text-gray-500">{item.notes}</p>
-                ) : null}
-                <div className="mt-4 text-xs text-gray-400">
-                  Last updated: {new Date(item.updatedAt).toLocaleString()}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <aside className="space-y-6">
+      <div className="space-y-8">
+        <section className="space-y-6">
           <div className="rounded-xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 p-6 text-white shadow">
             <h3 className="text-lg font-semibold">Attack Metrics</h3>
             <p className="mt-1 text-sm text-gray-200">
               Snapshot of reported activity.
             </p>
-            <div className="mt-6 grid gap-4">
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
               <div className="rounded-lg bg-white/10 p-4">
                 <div className="text-xs uppercase tracking-wide text-gray-200">Total links</div>
                 <div className="mt-1 text-2xl font-semibold">
@@ -143,14 +96,14 @@ function NewsPage() {
               Reports submitted by users are immediately added to the monitoring list
               and used to protect others.
             </p>
-            <div className="mt-4 space-y-3 text-sm text-gray-500">
-              <div className="flex items-center justify-between">
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 text-sm text-gray-500">
+              <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
                 <span>Active complaints</span>
                 <span className="font-semibold text-gray-900">
                   {metrics ? metrics.reportedLinks : '—'}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
                 <span>New links today</span>
                 <span className="font-semibold text-gray-900">
                   {feeds.length}
@@ -158,7 +111,54 @@ function NewsPage() {
               </div>
             </div>
           </div>
-        </aside>
+        </section>
+
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">Circulating Links</h2>
+            <span className="text-sm text-gray-500">
+              Updated from community reports
+            </span>
+          </div>
+
+          {status === 'loading' ? (
+            <div className="rounded-lg border border-gray-200 bg-white p-6 text-sm text-gray-600">
+              Loading phishing feeds...
+            </div>
+          ) : null}
+
+          {status === 'error' ? (
+            <div className="rounded-lg border border-red-200 bg-red-50 p-6 text-sm text-red-700">
+              {message}
+            </div>
+          ) : null}
+
+          {status === 'ready' && feeds.length === 0 ? (
+            <div className="rounded-lg border border-gray-200 bg-white p-6 text-sm text-gray-600">
+              No phishing links reported yet.
+            </div>
+          ) : null}
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {feeds.map((item) => (
+              <article key={item.url} className="rounded-lg bg-white p-6 shadow">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="text-sm font-semibold text-gray-900">{item.domain}</div>
+                  <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
+                    {item.source === 'user-report' ? 'Community report' : 'Seeded'}
+                  </span>
+                </div>
+                <p className="mt-3 break-all text-sm text-gray-600">{item.url}</p>
+                {item.notes ? (
+                  <p className="mt-3 text-sm text-gray-500">{item.notes}</p>
+                ) : null}
+                <div className="mt-4 text-xs text-gray-400">
+                  Last updated: {new Date(item.updatedAt).toLocaleString()}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   )
